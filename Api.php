@@ -2,6 +2,7 @@
 
 namespace Payum\Sofort;
 
+use Countable;
 use Sofort\SofortLib\Refund;
 use Sofort\SofortLib\Sofortueberweisung;
 use Sofort\SofortLib\TransactionData;
@@ -126,7 +127,7 @@ class Api
             $varName = $method;
             $varName = strtolower(preg_replace('/([^A-Z])([A-Z])/', '$1_$2', substr($varName, 3)));
 
-            if (count($params) == 2) {
+            if ($params instanceof Countable && count($params) == 2) {
                 $fields[$varName] = $transactionData->$method($params[0], $params[1]);
             } elseif ($params !== '') {
                 $fields[$varName] = $transactionData->$method($params);
